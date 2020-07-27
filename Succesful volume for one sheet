@@ -5,7 +5,15 @@ Dim Volume As Double
 Volume = 0
 Dim TotalVolumeRow As Integer
 TotalVolumeRow = 2
+Dim PercentChange As Double
+Dim OpenPrice As Double
+OpenPrice = Range("c3")
+Dim ClosePrice As Double
+Dim AnnualChange As Double
 LastRow = 70926
+
+'For Each ws In Worksheets
+'LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
 
     For d = 2 To LastRow
 '--Check to see if tickers match
@@ -16,6 +24,15 @@ LastRow = 70926
 '--Total all previous volume accumulations for active ticker and print in the summary table
         Volume = Volume + Cells(d, 7).Value
         Range("L" & TotalVolumeRow).Value = Volume
+'--Assign Closing date to current ticker
+        ClosePrice = Cells(d, 6).Value
+'--Find difference between close price and open price and print in the summary table
+        AnnualChange = ClosePrice - OpenPrice
+        Range("j" & TotalVolumeRow).Value = AnnualChange
+        PercentChange = AnnualChange / OpenPrice
+        Range("k" & TotalVolumeRow).Value = PercentChange
+'--Reset the Open price
+        OpenPrice = Cells(d + 1, 3)
 '--New summary table line assigned for next ticker and reset volume accumulator
         TotalVolumeRow = TotalVolumeRow + 1
         Volume = 0
@@ -23,6 +40,9 @@ LastRow = 70926
     Else
         Volume = Volume + Cells(d, 7).Value
     End If
-    Next d 
-
-End Sub
+    Next d
+    
+'--Convert Percentage numbers to % format
+    For p = 2 To LastRow
+    Range("K" & p).NumberFormat = "0.00%"
+    Next p
