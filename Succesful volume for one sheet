@@ -1,0 +1,28 @@
+Sub Test1()
+
+Dim Ticker As String
+Dim Volume As Double
+Volume = 0
+Dim TotalVolumeRow As Integer
+TotalVolumeRow = 2
+LastRow = 70926
+
+    For d = 2 To LastRow
+'--Check to see if tickers match
+    If Cells(d + 1, 1).Value <> Cells(d, 1).Value Then
+'--If they don't match, assign current ticker as "active" ticker and print in the summary table
+        Ticker = Cells(d, 1).Value
+        Range("I" & TotalVolumeRow).Value = Ticker
+'--Total all previous volume accumulations for active ticker and print in the summary table
+        Volume = Volume + Cells(d, 7).Value
+        Range("L" & TotalVolumeRow).Value = Volume
+'--New summary table line assigned for next ticker and reset volume accumulator
+        TotalVolumeRow = TotalVolumeRow + 1
+        Volume = 0
+'--If tickers DO match, then accumulate additional volume
+    Else
+        Volume = Volume + Cells(d, 7).Value
+    End If
+    Next d 
+
+End Sub
