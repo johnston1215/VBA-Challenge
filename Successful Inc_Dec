@@ -1,0 +1,34 @@
+'--Find Greatest % Increase and Decrease
+    
+    Dim PerInc As Double
+    Dim PerDec As Double
+    Dim ActTick As String
+    PerInc = 0
+    PerDec = 0
+    
+    For i = 2 To LastRow
+'--If the active %inc is > current %inc, then it becomes new Current inc%
+        If Cells(i, 11) > PerInc Then
+            PerInc = Cells(i, 11).Value
+            ActTick = Cells(i, 9).Value
+        End If
+    Next i
+'--Report results
+    Range("o2") = ActTick
+    Range("p2") = PerInc
+        
+    For d = 2 To LastRow
+'--If the active %dec is < current %dec, then it becomes new Current dec%
+        If Cells(d, 11) < PerDec Then
+            PerDec = Cells(d, 11).Value
+            ActTick = Cells(d, 9).Value
+        End If
+    Next d
+'--Report results
+    Range("o3") = ActTick
+    Range("p3") = PerDec
+    
+'--Convert Percentage numbers to % format
+    For p = 2 To 3
+    Range("p" & p).NumberFormat = "0.00%"
+    Next p
