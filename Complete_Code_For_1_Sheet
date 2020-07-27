@@ -1,51 +1,12 @@
-Sub DefineVariables()
-
-'--Define variables
-Dim Ticker As String
-Dim OpenPrice As Double
-Dim ClosePrice As Double
-Dim Volume As Double
-Dim TotalVolumeRow As Integer
-Dim PercentChange As Double
-Dim AnnualChange As Double
-Dim PerInc As Double
-Dim PerDec As Double
-Dim ActTick As String
-
-'--Make sure to save file as XLSM
-
-End Sub
-Sub ReportResults()
-
-'--Create columns to report results
-For Each ws In ThisWorkbook.Worksheets
-ws.Range("i1").Value = "Ticker"
-ws.Range("j1").Value = "Yearly Change"
-ws.Range("k1").Value = "Percent change"
-ws.Range("l1").Value = "Total Stock Volume"
-ws.Range("n2").Value = "Greatest % Inc"
-ws.Range("n3").Value = "Greatest % Dec"
-ws.Range("o1").Value = "Ticker"
-ws.Range("p1").Value = "Value"
-Next
-
-End Sub
 Sub Test1()
-
-'Dim Ticker As String
-'Dim Volume As Double
-Volume = 0
-'Dim TotalVolumeRow As Integer
-TotalVolumeRow = 2
-'Dim PercentChange As Double
-'Dim OpenPrice As Double
-OpenPrice = Range("c3")
-'Dim ClosePrice As Double
-'Dim AnnualChange As Double
-LastRow = 70926
 
 'For Each ws In Worksheets
 'LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+Volume = 0
+TotalVolumeRow = 2
+OpenPrice = Range("c3")
+LastRow = 70926
 
     For d = 2 To LastRow
 '--Check to see if tickers match
@@ -79,13 +40,14 @@ LastRow = 70926
     Range("K" & p).NumberFormat = "0.00%"
     Next p
     
-'--Find Greatest % Increase and Decrease
+'--Find Greatest % Increase, Decrease & Total Volume
     
     'Dim PerInc As Double
     'Dim PerDec As Double
     'Dim ActTick As String
     PerInc = 0
     PerDec = 0
+    TotVol = 0
     
     For i = 2 To LastRow
 '--If the active %inc is > current %inc, then it becomes new Current inc%
@@ -108,6 +70,17 @@ LastRow = 70926
 '--Report results
     Range("o3") = ActTick
     Range("p3") = PerDec
+    
+    For v = 2 To LastRow
+'--If the active Total Volume is > Current total volume, then it becomes new Current Total Volume
+        If Cells(v, 12) > TotVol Then
+            TotVol = Cells(v, 12).Value
+            ActTick = Cells(v, 9).Value
+        End If
+    Next v
+'--Report results
+    Range("o4") = ActTick
+    Range("p4") = TotVol
     
 '--Convert Percentage numbers to % format
     For p = 2 To 3
