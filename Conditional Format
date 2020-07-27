@@ -1,0 +1,9 @@
+'--Conditionally Format cells
+    For A = 2 To LastRow
+    If Range("K" & A) > 0 Then
+        Range("K" & A).Interior.ColorIndex = 4
+    Else
+        Range("K" & A).Interior.ColorIndex = 3
+    End If
+    Next A
+    
