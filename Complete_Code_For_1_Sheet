@@ -30,6 +30,8 @@ ws.Range("n3").Value = "Greatest % Dec"
 ws.Range("n4").Value = "Greatest Total Volume"
 ws.Range("o1").Value = "Ticker"
 ws.Range("p1").Value = "Value"
+ws.Columns("A:P").AutoFit
+
 Next
 
 End Sub
